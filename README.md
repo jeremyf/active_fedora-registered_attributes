@@ -1,5 +1,7 @@
 # ActiveFedora::RegisteredAttributes
 
+[![Build Status](https://travis-ci.org/jeremyf/active_fedora-registered_attributes.png?branch=master)](https://travis-ci.org/jeremyf/active_fedora-registered_attributes)
+
 An ActiveFedora extension for consolidating the attribute definitions for an object.
 
 ## Installation
