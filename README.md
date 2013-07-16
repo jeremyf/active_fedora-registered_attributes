@@ -4,6 +4,13 @@
 
 An ActiveFedora extension for consolidating the attribute definitions for an object.
 
+By registering an attribute, we can introspect on the model for:
+
+* generating forms
+* generating default views
+* generating reasonably helpful API documentation/explanation
+* helping developers readily see what the data attributes are
+
 ## Installation
 
 Add this line to your application's Gemfile:
