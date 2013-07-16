@@ -47,7 +47,7 @@ describe ActiveFedora::RegisteredAttributes::AttributeRegistry do
     end
   end
   describe '#input_options_for' do
-    let(:editable_options) { { editable: true, displayable: false } }
+    let(:editable_options) { { editable: true, displayable: false, multiple: true } }
 
     before(:each) do
       @editable_attribute = subject.register('editable', editable_options)

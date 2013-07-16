@@ -11,7 +11,7 @@ module ActiveFedora
         @options.assert_valid_keys(:default, :displayable, :editable, :form, :datastream, :validates, :at, :as, :multiple, :writer, :reader, :label, :hint)
         @datastream = @options.fetch(:datastream, false)
         @name = name
-        @options[:multiple] = true unless @options.key?(:multiple)
+        @options[:multiple] = false unless @options.key?(:multiple)
         @options[:form] ||= {}
       end
 

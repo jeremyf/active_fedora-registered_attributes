@@ -1,10 +1,8 @@
 require 'spec_helper'
 require "active_fedora/registered_attributes/attribute"
-require 'active_fedora'
 
 describe ActiveFedora::RegisteredAttributes::Attribute do
   class Something < ActiveFedora::Base
-    extend ActiveModel::Translation
   end
   let(:context) { Something }
   let(:field_name) { :title }
@@ -14,6 +12,7 @@ describe ActiveFedora::RegisteredAttributes::Attribute do
     {
       datastream: datastream, hint: 'Your title',
       form: { input_html: {style: 'title-picker'}},
+      multiple: true,
       displayable: true,
       editable: true,
       validates: validation_options

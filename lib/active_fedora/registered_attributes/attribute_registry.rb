@@ -1,5 +1,7 @@
 require 'delegate'
 require 'active_support/hash_with_indifferent_access'
+require 'active_fedora/registered_attributes/attribute'
+
 
 module ActiveFedora
   module RegisteredAttributes

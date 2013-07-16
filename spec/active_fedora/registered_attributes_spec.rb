@@ -17,7 +17,6 @@ describe 'ActiveFedora::RegisteredAttributes' do
 
     attribute :title, {
       datastream: 'properties',
-      multiple: false,
       label: 'Title of your Work',
       hint: "How would you name this?",
       validates: { presence: true }
@@ -25,7 +24,8 @@ describe 'ActiveFedora::RegisteredAttributes' do
 
     attribute :description, {
       datastream: 'properties',
-      default: ['One two']
+      default: ['One two'],
+      multiple: true
     }
 
     attribute :creator, {
@@ -91,12 +91,10 @@ describe 'ActiveFedora::RegisteredAttributes' do
     end
   end
 
-  let(:reloaded_subject) { subject.class.find(subject.pid) }
   describe '.attribute' do
     it "has creates a setter/getter" do
       subject.title = 'Hello'
-      subject.save!
-      expect(reloaded_subject.title).to eq('Hello')
+      expect(subject.properties.title).to eq([subject.title])
     end
 
     it "enforces validation when passed" do
