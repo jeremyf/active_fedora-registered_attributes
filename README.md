@@ -1,6 +1,6 @@
 # ActiveFedora::RegisteredAttributes
 
-TODO: Write a gem description
+An ActiveFedora extension for consolidating the attribute definitions for an object.
 
 ## Installation
 
@@ -18,7 +18,39 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+    class Foo < ActiveRecord::Base
+      include ActiveFedora::RegisteredAttributes
+
+      has_metadata name: "descMetadata", type: FooMetadataDatastream
+
+      attribute :title,
+        datastream: :descMetadata, multiple: false,
+        label: "Title of your Senior Thesis",
+        validates: { presence: { message: 'Your must have a title.' } }
+
+      attribute :creator,
+        datastream: :descMetadata, multiple: true,
+        label: "Author",
+        hint: "Enter your preferred name",
+        writer: :parse_person_names,
+        reader: :parse_person_names,
+        validates: { presence: { message: "You must have an author."} }
+    end
+
+## Internationalization
+
+If you utilize internationalization, such as below, then regardless of what
+your model indicates as the label, it will use the internationalization.
+
+    en:
+      activemodel:
+        attributes:
+          foo:
+            internationalized_field: Welcome
+
+## TODO
+
+* Add internationalization support for hints and validation messages.
 
 ## Contributing
 

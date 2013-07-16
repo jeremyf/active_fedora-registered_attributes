@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = ActiveFedora::RegisteredAttributes::VERSION
   spec.authors       = ["Jeremy Friesen"]
   spec.email         = ["jeremy.n.friesen@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
-  spec.homepage      = ""
+  spec.description   = %q{An ActiveFedora extension for registring attributes}
+  spec.summary       = %q{An ActiveFedora extension for registring attributes}
+  spec.homepage      = "http://github.com/jeremyf/active_fedora-registered_attributes"
   spec.license       = "APACHE2"
 
   spec.files         = `git ls-files`.split($/)
