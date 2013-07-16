@@ -2,7 +2,7 @@ require 'spec_helper'
 require "active_fedora/registered_attributes/attribute_registry"
 
 describe ActiveFedora::RegisteredAttributes::AttributeRegistry do
-  let(:context) { ActiveFedora::Base }
+  let(:context) { Book }
   let(:name) { "My Name" }
   let(:options) { {} }
   subject { ActiveFedora::RegisteredAttributes::AttributeRegistry.new(context) }

@@ -60,6 +60,12 @@ describe 'ActiveFedora::RegisteredAttributes' do
       }
     }
 
+    attribute :not_in_the_datastream, {
+      multiple: false,
+      editable: false,
+      displayable: false
+    }
+
     attribute :modified_on, {
       datastream: 'properties',
       multiple: true,
@@ -92,6 +98,10 @@ describe 'ActiveFedora::RegisteredAttributes' do
   end
 
   describe '.attribute' do
+    it 'handles attributes not delegated to a datastream' do
+      subject.not_in_the_datastream = 'World?'
+      expect(subject.not_in_the_datastream).to eq('World?')
+    end
     it "has creates a setter/getter" do
       subject.title = 'Hello'
       expect(subject.properties.title).to eq([subject.title])
