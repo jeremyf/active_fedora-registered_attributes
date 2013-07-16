@@ -5,4 +5,6 @@ gemspec
 
 group :test do
   gem 'simplecov', require: false
+  gem "guard"
+  gem "guard-rspec"
 end
