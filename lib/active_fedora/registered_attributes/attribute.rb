@@ -5,6 +5,40 @@ module ActiveFedora
       attr_reader :context_class, :name, :datastream
       private :context_class
 
+      # == Parameters:
+      # @param context_class [ActiveFedora::Base, #human_attribute_name]
+      #    A descendant of ActiveFedora::Base.
+      #    Though generally speaking it may work with other ActiveModel descendants
+      #
+      # @param name [String, Symbol]
+      #    The name of the attribute (i.e. "title", "subject", "description").
+      # @param [Hash] options Configuration options
+      # @option options [Symbol, #call] :default
+      # @option options [Boolean] :displayable (true)
+      # @option options [Boolean] :editable (true)
+      #    By marking this attribute :editable
+      # @option options [Hash] :form
+      #    Additional options for a form builder (i.e. class, id, data-attribute)
+      # @option options [Symbol, String, Nil] :datastream
+      #    Where will the attribute persist; This can be nil. If nil, this would
+      #    be a virtual attribute (i.e. attr_accessor name)
+      # @option options [Hash] :validates
+      #    A hash that can be used as the args for ActiveModel::Validations::ClassMethods.validates
+      # @option options [?] :at
+      #    An option for ActiveFedora::Base.delegate
+      # @option options [?] :as
+      #    An option for ActiveFedora::Base.delegate
+      # @option options [Boolean] :multiple (false)
+      #    Can there be multiple values for this attribute?
+      #    Used to derive an option for ActiveFedora::Base.delegate
+      # @option options [Symbol, #call] :writer
+      #    Before we persist the attribute, pass the value through the :writer
+      # @option options [Symbol, #call] :reader
+      #    After we retrieve the value from its persistence, transform the value via the :reader
+      # @option options [#to_s] :label (internationalization)
+      #    If we were to build a form from this, what would we use as the label
+      # @option options [#to_s] :hint
+      #    A supplement to the Attribute's :label
       def initialize(context_class, name, options = {})
         @context_class = context_class
         @options = options.symbolize_keys

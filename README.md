@@ -46,6 +46,8 @@ Or install it yourself as:
         validates: { presence: { message: "You must have an author."} }
     end
 
+See [ActiveFedora::RegisteredAttributes::Attribute](lib/active_fedora/registered_attributes/attribute.rb)
+
 ## Internationalization
 
 If you utilize internationalization, such as below, then regardless of what
