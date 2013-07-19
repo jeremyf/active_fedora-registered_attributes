@@ -19,15 +19,12 @@ module ActiveFedora
       #    By marking this attribute :editable
       # @option options [Hash] :form
       #    Additional options for a form builder (i.e. class, id, data-attribute)
-      # @option options [Symbol, String, Nil] :datastream
+      # @option options [Symbol, String, Nil, Hash] :datastream
       #    Where will the attribute persist; This can be nil. If nil, this would
-      #    be a virtual attribute (i.e. attr_accessor name)
+      #    be a virtual attribute (i.e. attr_accessor name). If it is not nil,
+      #    then see {#options_for_delegation}
       # @option options [Hash] :validates
       #    A hash that can be used as the args for ActiveModel::Validations::ClassMethods.validates
-      # @option options [?] :at
-      #    An option for ActiveFedora::Base.delegate
-      # @option options [?] :as
-      #    An option for ActiveFedora::Base.delegate
       # @option options [Boolean] :multiple (false)
       #    Can there be multiple values for this attribute?
       #    Used to derive an option for ActiveFedora::Base.delegate
@@ -42,7 +39,7 @@ module ActiveFedora
       def initialize(context_class, name, options = {})
         @context_class = context_class
         @options = options.symbolize_keys
-        @options.assert_valid_keys(:default, :displayable, :editable, :form, :datastream, :validates, :at, :as, :multiple, :writer, :reader, :label, :hint)
+        @options.assert_valid_keys(:default, :displayable, :editable, :form, :datastream, :validates, :multiple, :writer, :reader, :label, :hint)
         @datastream = @options.fetch(:datastream, false)
         @name = name
         @options[:multiple] = false unless @options.key?(:multiple)
@@ -78,7 +75,6 @@ module ActiveFedora
         options[:form].tap {|hash|
           hash[:hint] ||= options[:hint] if options[:hint]
           hash[:label] ||= options[:label] if options[:label]
-          hash[:as] ||= options[:as] if options[:as]
           if options[:multiple]
             hash[:as] = 'multi_value'
             hash[:input_html] ||= {}
@@ -121,12 +117,14 @@ module ActiveFedora
       private
 
         def options_for_delegation
-          {
-            to: datastream,
-            unique: !options[:multiple]
-          }.tap {|hash|
-            hash[:at] = options[:at] if options.key?(:at)
-          }
+          if datastream.is_a?(Hash)
+            datastream.merge(unique: !options[:multiple])
+          else
+            {
+              to: datastream,
+              unique: !options[:multiple]
+            }
+          end
         end
 
         def with_writer_method_wrap

@@ -47,14 +47,40 @@ describe ActiveFedora::RegisteredAttributes::Attribute do
 
   describe '#with_delegation_options' do
     describe 'with a datastream' do
-      it 'yields name and options' do
-        @yielded = false
-        subject.with_delegation_options {|name,opts|
-          @yielded = true
-          expect(name).to eq(field_name)
-          expect(opts).to eq(subject.send(:options_for_delegation))
+      let(:options) {
+        {
+          datastream: datastream,
+          multiple: true,
         }
-        expect(@yielded).to eq(true)
+      }
+      describe 'and minimal options' do
+        it 'yields name and options' do
+          @yielded = false
+          subject.with_delegation_options {|name,opts|
+            @yielded = true
+            expect(name).to eq(field_name)
+            expect(opts).to eq(to: datastream, unique: false)
+          }
+          expect(@yielded).to eq(true)
+        end
+      end
+      describe 'with :at options' do
+        let(:at_value) {[:ab]}
+        let(:options) {
+          {
+            multiple: true,
+            datastream: {to: datastream, at: at_value, unique: true }
+          }
+        }
+        it 'yields name and options' do
+          @yielded = false
+          subject.with_delegation_options {|name,opts|
+            @yielded = true
+            expect(name).to eq(field_name)
+            expect(opts).to eq(to: datastream, unique: !options.fetch(:multiple), at: at_value)
+          }
+          expect(@yielded).to eq(true)
+        end
       end
     end
     describe 'without datastream' do
