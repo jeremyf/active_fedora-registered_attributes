@@ -46,6 +46,10 @@ module ActiveFedora
         @options[:form] ||= {}
       end
 
+      def multiple?
+        options[:multiple]
+      end
+
       def displayable?
         @options.fetch(:displayable, true)
       end
@@ -75,7 +79,7 @@ module ActiveFedora
         options[:form].tap {|hash|
           hash[:hint] ||= options[:hint] if options[:hint]
           hash[:label] ||= options[:label] if options[:label]
-          if options[:multiple]
+          if multiple?
             hash[:as] = 'multi_value'
             hash[:input_html] ||= {}
             hash[:input_html][:multiple] = 'multiple'
@@ -118,11 +122,11 @@ module ActiveFedora
 
         def options_for_delegation
           if datastream.is_a?(Hash)
-            datastream.merge(unique: !options[:multiple])
+            datastream.merge(unique: !multiple?)
           else
             {
               to: datastream,
-              unique: !options[:multiple]
+              unique: !multiple?
             }
           end
         end
