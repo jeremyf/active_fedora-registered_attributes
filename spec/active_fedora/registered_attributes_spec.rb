@@ -145,6 +145,14 @@ describe 'ActiveFedora::RegisteredAttributes' do
       expect(subject.file_names).to eq(values.reverse)
     end
 
+    it "intercepts blanks and omits them" do
+      values = ['foo.rb', '', 'bar.rb', '']
+      expected_values = ['foo.rb', 'bar.rb']
+      subject.description = values
+      expect(subject.properties.description).to eq(expected_values)
+      expect(subject.description).to eq(expected_values)
+    end
+
     it "allows for a writer that is a symbol" do
       values = ['South Bend', 'State College', 'Minneapolis']
       expected_values = values.dup

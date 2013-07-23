@@ -132,11 +132,16 @@ module ActiveFedora
         end
 
         def with_writer_method_wrap
+          method_name = "#{name}=".to_sym
           if writer = options[:writer]
-            method_name = "#{name}=".to_sym
             proc = writer.respond_to?(:call) ?
               writer :
               lambda { |value| send(writer, value) }
+            yield(method_name, proc)
+          elsif multiple?
+            proc = lambda {|values|
+              values.select {|value| value.present? }
+            }
             yield(method_name, proc)
           end
         end
