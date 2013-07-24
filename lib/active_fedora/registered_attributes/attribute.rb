@@ -139,8 +139,8 @@ module ActiveFedora
               lambda { |value| send(writer, value) }
             yield(method_name, proc)
           elsif multiple?
-            proc = lambda {|values|
-              values.select {|value| value.present? }
+            proc = lambda {|*values|
+              Array(values).flatten.select {|value| value.present? }
             }
             yield(method_name, proc)
           end
