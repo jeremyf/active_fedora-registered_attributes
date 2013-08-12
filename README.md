@@ -27,7 +27,7 @@ Or install it yourself as:
 
 ## Usage
 
-    class Foo < ActiveRecord::Base
+    class Foo < ActiveFedora::Base
       include ActiveFedora::RegisteredAttributes
 
       has_metadata name: "descMetadata", type: FooMetadataDatastream
