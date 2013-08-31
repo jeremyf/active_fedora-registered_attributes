@@ -6,6 +6,7 @@ describe ActiveFedora::RegisteredAttributes::Attribute do
   let(:field_name) { :title }
   let(:datastream) { 'properties' }
   let(:validation_options) {{ presence: true }}
+  let(:skip_accessor) { false }
   let(:options) {
     {
       datastream: datastream, hint: 'Your title',
@@ -120,6 +121,7 @@ describe ActiveFedora::RegisteredAttributes::Attribute do
   end
 
   describe '#with_accession_options' do
+    let(:options) { { datastream: 'hello' } }
     describe 'with a datastream' do
       it 'does not yield name nor options' do
         @yielded = false
@@ -131,7 +133,7 @@ describe ActiveFedora::RegisteredAttributes::Attribute do
     end
 
     describe 'without datastream' do
-      let(:datastream) { nil }
+      let(:options) { { datastream: nil } }
       it 'yields name and options for #accession' do
         @yielded = false
         subject.with_accession_options {|name,opts|
@@ -140,6 +142,18 @@ describe ActiveFedora::RegisteredAttributes::Attribute do
           expect(opts).to eq({})
         }
         expect(@yielded).to eq(true)
+      end
+    end
+
+    describe 'without datastream and skipping accessor' do
+      let(:options) { {datastream: nil, skip_accessor: true} }
+      it 'does not yield accession options' do
+        @yielded = false
+        puts subject.send(:options)
+        subject.with_accession_options {|name,opts|
+          @yielded = true
+        }
+        expect(@yielded).to eq(false)
       end
     end
   end

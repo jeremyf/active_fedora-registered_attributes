@@ -17,6 +17,8 @@ module ActiveFedora
       # @option options [Boolean] :displayable (true)
       # @option options [Boolean] :editable (true)
       #    By marking this attribute :editable
+      # @option options [Boolean] :skip_accessor (false)
+      #    Don't attempt to create the setter/getter if there is no :datastream option
       # @option options [Hash] :form
       #    Additional options for a form builder (i.e. class, id, data-attribute)
       # @option options [Symbol, String, Nil, Hash] :datastream
@@ -37,9 +39,9 @@ module ActiveFedora
       # @option options [#to_s] :hint
       #    A supplement to the Attribute's :label
       def initialize(context_class, name, options = {})
-        @context_class = context_class
         @options = options.symbolize_keys
-        @options.assert_valid_keys(:default, :displayable, :editable, :form, :datastream, :validates, :multiple, :writer, :reader, :label, :hint)
+        @options.assert_valid_keys(:default, :displayable, :editable, :form, :datastream, :validates, :multiple, :writer, :reader, :label, :hint, :skip_accessor)
+        @context_class = context_class
         @datastream = @options.fetch(:datastream, false)
         @name = name
         @options[:multiple] = false unless @options.key?(:multiple)
@@ -64,16 +66,25 @@ module ActiveFedora
       end
 
       def with_delegation_options
-        yield(name, options_for_delegation) if datastream
+        yield(name, options_for_delegation) if with_delegation?
       end
+      def with_delegation?; datastream; end
+      private :with_delegation?
 
       def with_validation_options
-        yield(name, options[:validates]) if options[:validates]
+        yield(name, options[:validates]) if with_validation?
       end
+      def with_validation?; options[:validates]; end
+      private :with_validation?
 
       def with_accession_options
-        yield(name, {}) if !datastream
+        yield(name, {}) if with_accession?
       end
+      def with_accession?
+        return false if options[:skip_accessor]
+        !datastream
+      end
+      private :with_accession?
 
       def options_for_input(overrides = {})
         options[:form].tap {|hash|
