@@ -44,26 +44,20 @@ module ActiveFedora
       end
     end
 
-
-    # Applies the attribute defaults
-    #
-    # Applies all the default values to any attributes not yet set, avoiding
-    # any attribute setter logic, such as dirty tracking.
-    #
-    # @param [Hash{String => Object}, #each] defaults The defaults to apply
-    def apply_defaults(defaults=attribute_defaults)
-      defaults.each do |name, value|
-        unless value.nil?
-          send("#{name}=", value) unless send("#{name}").present?
-        end
-      end
-    end
-
     # Applies attribute default values
     def initialize(*)
       super
       apply_defaults
     end
 
+    protected
+    def apply_defaults(defaults=attribute_defaults)
+      defaults.each do |name, value|
+        if !value.nil? && !persisted?
+          send("#{name}=", value) # unless send("#{name}").present?
+        end
+      end
+    end
   end
+
 end

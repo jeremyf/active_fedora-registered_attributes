@@ -147,7 +147,7 @@ describe ActiveFedora::RegisteredAttributes::Attribute do
 
     describe 'without datastream and skipping accessor' do
       let(:options) { {datastream: nil, skip_accessor: true} }
-      it 'does not yield accession options' do
+      it 'does not yield accession options_for_input' do
         @yielded = false
         puts subject.send(:options)
         subject.with_accession_options {|name,opts|
