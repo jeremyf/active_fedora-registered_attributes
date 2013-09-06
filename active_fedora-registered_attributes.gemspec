@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["jeremy.n.friesen@gmail.com"]
   spec.description   = %q{An ActiveFedora extension for registring attributes}
   spec.summary       = %q{An ActiveFedora extension for registring attributes}
-  spec.homepage      = "http://github.com/jeremyf/active_fedora-registered_attributes"
+  spec.homepage      = "http://github.com/projecthydra/active_fedora-registered_attributes"
   spec.license       = "APACHE2"
 
   spec.files         = `git ls-files`.split($/)
