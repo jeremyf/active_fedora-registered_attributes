@@ -50,6 +50,14 @@ module ActiveFedora
       apply_defaults
     end
 
+    def terms_for_editing
+      editable_attributes.collect(&:name)
+    end
+
+    def terms_for_display
+      displayable_attributes.collect(&:name)
+    end
+
     protected
     def apply_defaults(defaults=attribute_defaults)
       defaults.each do |name, value|

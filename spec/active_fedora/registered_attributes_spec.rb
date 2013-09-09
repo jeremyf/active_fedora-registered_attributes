@@ -84,6 +84,7 @@ describe 'ActiveFedora::RegisteredAttributes' do
     it 'is all of the attributes that are editable' do
       actual_editable_attributes = subject.editable_attributes.collect {|a| a.name }
       expect(actual_editable_attributes).to eq(expected_attribute_names)
+      expect(subject.terms_for_editing).to eq(expected_attribute_names)
     end
   end
 
@@ -94,6 +95,7 @@ describe 'ActiveFedora::RegisteredAttributes' do
     it 'is all of the attributes that are displayable' do
       actual_displayable_attributes = subject.displayable_attributes.collect {|a| a.name }
       expect(actual_displayable_attributes).to eq(expected_attribute_names)
+      expect(subject.terms_for_display).to eq(expected_attribute_names)
     end
   end
 
