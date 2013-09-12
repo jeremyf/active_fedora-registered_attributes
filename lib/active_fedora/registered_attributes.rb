@@ -22,6 +22,10 @@ module ActiveFedora
     private :attribute_registry
 
     module ClassMethods
+      def registered_attribute_names
+        attribute_registry.keys.collect(&:to_sym)
+      end
+
       def attribute(attribute_name, options ={})
         self.attribute_registry ||= AttributeRegistry.new(self)
         self.attribute_registry.register(attribute_name, options) do |attribute|
