@@ -99,6 +99,20 @@ describe 'ActiveFedora::RegisteredAttributes' do
     end
   end
 
+  describe '.editable_attributes' do
+    it 'delegates to the .attribute_registry' do
+      expected_editable_attributes = MockDelegateAttribute.attribute_registry.editable_attributes
+      expect(MockDelegateAttribute.editable_attributes).to eq expected_editable_attributes
+    end
+  end
+
+  describe '.displayable_attributes' do
+    it 'delegates to the .attribute_registry' do
+      expected_displayable_attributes = MockDelegateAttribute.attribute_registry.displayable_attributes
+      expect(MockDelegateAttribute.displayable_attributes).to eq expected_displayable_attributes
+    end
+  end
+
   describe '#displayable_attributes' do
     let(:expected_attribute_names) {
       [ :title, :description, :creator, :file_names, :created_on, :modified_on ]

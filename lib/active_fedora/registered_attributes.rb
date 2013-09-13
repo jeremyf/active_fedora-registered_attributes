@@ -26,6 +26,14 @@ module ActiveFedora
         attribute_registry.keys.collect(&:to_sym)
       end
 
+      def editable_attributes
+        attribute_registry.editable_attributes
+      end
+
+      def displayable_attributes
+        attribute_registry.displayable_attributes
+      end
+
       def attribute(attribute_name, options ={})
         self.attribute_registry ||= AttributeRegistry.new(self)
         self.attribute_registry.register(attribute_name, options) do |attribute|
