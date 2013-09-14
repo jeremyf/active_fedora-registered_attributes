@@ -23,7 +23,7 @@ module ActiveFedora
 
     module ClassMethods
       def registered_attribute_names
-        attribute_registry.keys.collect(&:to_sym)
+        attribute_registry.keys.collect(&:to_s)
       end
 
       def editable_attributes

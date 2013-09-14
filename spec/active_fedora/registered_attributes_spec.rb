@@ -79,7 +79,7 @@ describe 'ActiveFedora::RegisteredAttributes' do
 
   describe '.registered_attribute_names' do
     let(:expected_attribute_names) {
-      [:title, :description, :creator, :file_names, :locations, :created_on, :not_in_the_datastream, :modified_on]
+      ["title", "description", "creator", "file_names", "locations", "created_on", "not_in_the_datastream", "modified_on"]
     }
     it {
       expect(MockDelegateAttribute.registered_attribute_names).to eq(
