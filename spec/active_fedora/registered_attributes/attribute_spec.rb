@@ -60,7 +60,7 @@ describe ActiveFedora::RegisteredAttributes::Attribute do
           subject.with_delegation_options {|name,opts|
             @yielded = true
             expect(name).to eq(field_name)
-            expect(opts).to eq(to: datastream, unique: false)
+            expect(opts).to eq(to: datastream, multiple: true)
           }
           expect(@yielded).to eq(true)
         end
@@ -70,7 +70,7 @@ describe ActiveFedora::RegisteredAttributes::Attribute do
         let(:options) {
           {
             multiple: true,
-            datastream: {to: datastream, at: at_value, unique: true }
+            datastream: {to: datastream, at: at_value, multiple: false }
           }
         }
         it 'yields name and options' do
@@ -78,7 +78,7 @@ describe ActiveFedora::RegisteredAttributes::Attribute do
           subject.with_delegation_options {|name,opts|
             @yielded = true
             expect(name).to eq(field_name)
-            expect(opts).to eq(to: datastream, unique: !options.fetch(:multiple), at: at_value)
+            expect(opts).to eq(to: datastream, multiple: options.fetch(:multiple), at: at_value)
           }
           expect(@yielded).to eq(true)
         end
@@ -149,7 +149,6 @@ describe ActiveFedora::RegisteredAttributes::Attribute do
       let(:options) { {datastream: nil, skip_accessor: true} }
       it 'does not yield accession options_for_input' do
         @yielded = false
-        puts subject.send(:options)
         subject.with_accession_options {|name,opts|
           @yielded = true
         }
