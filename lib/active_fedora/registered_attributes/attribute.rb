@@ -133,11 +133,11 @@ module ActiveFedora
 
         def options_for_delegation
           if datastream.is_a?(Hash)
-            datastream.merge(unique: !multiple?)
+            datastream.merge(multiple: multiple?)
           else
             {
               to: datastream,
-              unique: !multiple?
+              multiple: multiple?
             }
           end
         end
