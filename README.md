@@ -1,5 +1,6 @@
 # ActiveFedora::RegisteredAttributes
 
+[![Gem Version](https://badge.fury.io/rb/active_fedora-registered_attributes.png)](http://badge.fury.io/rb/active_fedora-registered_attributes)
 [![Build Status](https://travis-ci.org/projecthydra/active_fedora-registered_attributes.png?branch=master)](https://travis-ci.org/projecthydra/active_fedora-registered_attributes)
 
 An ActiveFedora extension for consolidating the attribute definitions for an object.
