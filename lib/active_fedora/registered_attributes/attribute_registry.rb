@@ -20,16 +20,14 @@ module ActiveFedora
       end
 
       def editable_attributes
-        @editable_attributes ||= each_with_object([]) {|(name, attribute), m|
-          m << attribute if attribute.editable?
-          m
+        @editable_attributes ||= select_matching_attributes { |attribute|
+          attribute.editable?
         }
       end
 
       def displayable_attributes
-        @displayable_attributes ||= each_with_object([]) {|(name, attribute),m|
-          m << attribute if attribute.displayable?
-          m
+        @displayable_attributes ||= select_matching_attributes { |attribute|
+          attribute.displayable?
         }
       end
 
@@ -50,6 +48,14 @@ module ActiveFedora
         fetch(name).label
       rescue KeyError
         name.to_s.titleize
+      end
+
+      private
+      def select_matching_attributes
+        each_with_object([]) do |(name, attribute),m|
+          m << attribute if yield(attribute)
+          m
+        end
       end
     end
 
