@@ -5,7 +5,7 @@ describe ActiveFedora::RegisteredAttributes::AttributeRegistry do
   let(:context) { Book }
   let(:name) { "My Name" }
   let(:options) { {} }
-  subject { ActiveFedora::RegisteredAttributes::AttributeRegistry.new(context) }
+  subject { described_class.new(context) }
 
   describe '#register' do
     it 'yields an attribute' do

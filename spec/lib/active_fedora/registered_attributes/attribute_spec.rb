@@ -21,7 +21,7 @@ describe ActiveFedora::RegisteredAttributes::Attribute do
   let(:displayable) { true }
   let(:editable) { true }
   let(:default_value) { nil }
-  subject { ActiveFedora::RegisteredAttributes::Attribute.new(context, field_name, options) }
+  subject { described_class.new(context, field_name, options) }
 
   describe '#displayable?' do
     its (:displayable?) { should == displayable }
