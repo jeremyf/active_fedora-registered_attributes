@@ -2,6 +2,11 @@ module ActiveFedora
   module RegisteredAttributes
     class Attribute
 
+      VALID_ATTRIBUTE_OPTIONS = [
+        :default, :displayable, :editable, :form, :datastream, :validates,
+        :multiple, :writer, :reader, :label, :hint, :skip_accessor
+      ].freeze
+
       attr_reader :context_class, :name, :datastream
       private :context_class
 
@@ -40,7 +45,7 @@ module ActiveFedora
       #    A supplement to the Attribute's :label
       def initialize(context_class, name, options = {})
         @options = options.symbolize_keys
-        @options.assert_valid_keys(:default, :displayable, :editable, :form, :datastream, :validates, :multiple, :writer, :reader, :label, :hint, :skip_accessor)
+        @options.assert_valid_keys(VALID_ATTRIBUTE_OPTIONS)
         @context_class = context_class
         @datastream = @options.fetch(:datastream, false)
         @name = name
