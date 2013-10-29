@@ -60,7 +60,7 @@ describe ActiveFedora::RegisteredAttributes::Attribute do
           subject.with_delegation_options {|name,opts|
             @yielded = true
             expect(name).to eq(field_name)
-            expect(opts).to eq(to: datastream, multiple: true)
+            expect(opts).to eq(datastream: datastream, multiple: true)
           }
           expect(@yielded).to eq(true)
         end

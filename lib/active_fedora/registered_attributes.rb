@@ -47,7 +47,7 @@ module ActiveFedora
           end
 
           attribute.with_delegation_options do |name, opts|
-            delegate(name, opts)
+            has_attributes(name, opts)
           end
 
           attribute.wrap_writer_method(self)
