@@ -141,7 +141,7 @@ module ActiveFedora
             datastream.merge(multiple: multiple?)
           else
             {
-              to: datastream,
+              datastream: datastream,
               multiple: multiple?
             }
           end
