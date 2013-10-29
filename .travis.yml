@@ -3,10 +3,13 @@ rvm:
   - "1.9.3"
   - "2.0.0"
 
-script: "rspec"
+script: "bundle exec rspec"
+
+env:
+  global:
+  - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
 
 notifications:
   irc: "irc.freenode.org#ndlib"
 
-before_install:
-  - gem install bundler
+cache: bundler
