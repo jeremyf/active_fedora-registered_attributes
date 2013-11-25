@@ -75,6 +75,11 @@ describe 'ActiveFedora::RegisteredAttributes' do
       }
     }
   end
+
+  class ChildModel < MockDelegateAttribute
+    attribute :not_on_parent
+  end
+
   subject { MockDelegateAttribute.new() }
 
   describe '.registered_attribute_names' do
@@ -125,6 +130,29 @@ describe 'ActiveFedora::RegisteredAttributes' do
   end
 
   describe '.attribute' do
+
+    context 'for model inheritance' do
+      it 'does not add child declared attributes to parent class' do
+        expect {
+          MockDelegateAttribute.attribute_registry.fetch(:not_on_parent)
+        }.to raise_error(KeyError)
+      end
+
+      it 'children have parent attributes' do
+        expect {
+          ChildModel.attribute_registry.fetch(:title)
+        }.to_not raise_error(KeyError)
+      end
+
+      it 'children have attribute setting from parent' do
+        child = ChildModel.new
+
+        expect {
+          child.title = 'Hello'
+        }.to_not raise_error(NoMethodError)
+      end
+    end
+
     it 'handles attributes not delegated to a datastream' do
       subject.not_in_the_datastream = 'World?'
       expect(subject.not_in_the_datastream).to eq('World?')

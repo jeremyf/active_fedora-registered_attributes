@@ -6,9 +6,6 @@ require "active_fedora/registered_attributes/attribute_registry"
 module ActiveFedora
   module RegisteredAttributes
     extend ActiveSupport::Concern
-    included do
-      class_attribute :attribute_registry, instance_writer: false, instance_reader: false
-    end
 
     delegate :attribute_defaults, to: :attribute_registry
     delegate :input_options_for, to: :attribute_registry
@@ -22,6 +19,17 @@ module ActiveFedora
     private :attribute_registry
 
     module ClassMethods
+      def attribute_registry
+        @attribute_registry ||=
+        begin
+          if superclass.respond_to?(:attribute_registry)
+            superclass.attribute_registry.copy_to(self)
+          else
+            AttributeRegistry.new(self)
+          end
+        end
+      end
+
       def registered_attribute_names
         attribute_registry.keys.collect(&:to_s)
       end
@@ -35,7 +43,6 @@ module ActiveFedora
       end
 
       def attribute(attribute_name, options ={})
-        self.attribute_registry ||= AttributeRegistry.new(self)
         self.attribute_registry.register(attribute_name, options) do |attribute|
 
           attribute.with_validation_options do |name, opts|
