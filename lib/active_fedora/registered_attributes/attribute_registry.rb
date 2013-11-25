@@ -7,9 +7,13 @@ module ActiveFedora
   module RegisteredAttributes
     class AttributeRegistry < DelegateClass(HashWithIndifferentAccess)
       attr_accessor :context_class
-      def initialize(context_class)
+      def initialize(context_class, initial_container = HashWithIndifferentAccess.new)
         @context_class = context_class
-        super(HashWithIndifferentAccess.new)
+        super(initial_container)
+      end
+
+      def copy_to(target)
+        self.class.new(target, __getobj__.dup)
       end
 
       def register(attribute_name, options)
